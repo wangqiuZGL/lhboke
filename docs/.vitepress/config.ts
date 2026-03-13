@@ -1,9 +1,12 @@
 import { defineConfig } from "vitepress";
 import llmstxt from "vitepress-plugin-llms";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { teekConfig } from "./teekConfig";
 import { nav } from "./nav";
 
 const description = ["欢迎来到我个人笔记记录"].toString();
+const docsRoot = fileURLToPath(new URL("..", import.meta.url));
 
 const base = "/lhboke/";
 
@@ -95,6 +98,12 @@ export default defineConfig({
   },
   vite: {
     plugins: [llmstxt() as any],
+    resolve: {
+      alias: {
+        "/qian/": `${resolve(docsRoot, "public", "qian")}/`,
+        "/vue/": `${resolve(docsRoot, "public", "vue")}/`,
+      },
+    },
   },
   // transformHtml: (code, id, context) => {
   //   if (context.page !== "404.md") return code;
